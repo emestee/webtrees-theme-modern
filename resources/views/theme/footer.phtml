@@ -4,8 +4,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Module\ModuleFooterInterface;
 
-$request = app(ServerRequestInterface::class);
-$footers = app(ModuleService::class)->findByInterface(ModuleFooterInterface::class)->map(static function (ModuleFooterInterface $module) use ($request): string {
+use Fisharebest\Webtrees\Registry;
+
+$request = Registry::container()->get(ServerRequestInterface::class);
+$footers = Registry::container()->get(ModuleService::class)->findByInterface(ModuleFooterInterface::class)->map(static function (ModuleFooterInterface $module) use ($request): string {
     return $module->getFooter($request);
 });
 
